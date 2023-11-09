@@ -16,7 +16,9 @@ public class HelloWordTest {
         response.print();
     }
 
-
+    /**
+     * Наша задача вывести текст второго сообщения.
+     */
     @Test
     public void printSecondMassage() {
 
@@ -27,6 +29,24 @@ public class HelloWordTest {
         List<String> messages = response.getList("messages.message");
         String message2 = messages.get(1);
         System.out.println(message2);
+    }
+
+    /**
+     * Наша задача — распечатать адрес, на который редиректит указанные URL.
+     */
+    @Test
+    public void redirect() {
+
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(false)
+                .get("https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+
+        String location = response.getHeader("Location");
+        System.out.println("Ссылка на редирект - " + location);
+
     }
 
 }
