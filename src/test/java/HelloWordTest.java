@@ -49,4 +49,29 @@ public class HelloWordTest {
 
     }
 
+    /**
+     * Наша задача — написать цикл, которая будет создавать запросы в цикле,
+     * каждый раз читая URL для редиректа из нужного заголовка.
+     * И так, пока мы не дойдем до ответа с кодом 200..
+     */
+    @Test
+    public void longRedirect() {
+
+        String url = "https://playground.learnqa.ru/api/long_redirect";
+        while (url != null) {
+            Response response = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .get(url)
+                    .andReturn();
+            String location = response.getHeader("Location");
+            int statusCode = response.getStatusCode();
+            url = location;
+            System.out.println("Ссылка на редирект - " + url + ", статус код " + statusCode);
+
+        }
+
+    }
 }
+
